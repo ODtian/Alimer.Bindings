@@ -406,7 +406,7 @@ public static unsafe partial class Meshopt
         {
             return Simplify(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 targetIndexCount,
                 targetError,
                 options,
@@ -437,7 +437,7 @@ public static unsafe partial class Meshopt
         {
             return SimplifyWithAttributes(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 vertexAttributesPtr, vertexAttributesStride,
                 attributeWeightsPtr,
                 attributeCount,
@@ -474,7 +474,7 @@ public static unsafe partial class Meshopt
         {
             return SimplifyWithAttributes(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 vertexAttributesPtr, vertexAttributesStride,
                 attributeWeightsPtr,
                 attributeCount,
@@ -504,7 +504,7 @@ public static unsafe partial class Meshopt
         {
             return SimplifySloppy(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 null,
                 targetIndexCount,
                 targetError,
@@ -531,7 +531,7 @@ public static unsafe partial class Meshopt
         {
             return SimplifySloppy(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 vertexLock,
                 targetIndexCount,
                 targetError,
@@ -551,7 +551,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexColorsPtr = vertexColors)
         {
             return SimplifyPoints(destinationPtr,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 vertexColorsPtr, vertexColorsStride,
                 colorWeight,
                 targetVertexCount);
@@ -562,7 +562,7 @@ public static unsafe partial class Meshopt
     {
         fixed (float* vertexPositionsPtr = vertexPositions)
         {
-            return SimplifyScale(vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride);
+            return SimplifyScale(vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride);
         }
     }
 
@@ -603,7 +603,7 @@ public static unsafe partial class Meshopt
         fixed (uint* indicesPtr = indices)
         fixed (float* vertexPositionsPtr = vertexPositions)
             return AnalyzeOverdraw(indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride);
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride);
     }
 
     public static VertexFetchStatistics AnalyzeVertexFetch(ReadOnlySpan<uint> indices, nuint vertexCount, nuint vertexSize)
@@ -627,7 +627,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexPositionsPtr = vertexPositions)
             return BuildMeshlets(meshletsPtr, meshletVerticesPtr, meshletTrianglesPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 maxVertices, maxTriangles, coneWeight);
     }
 
@@ -669,7 +669,7 @@ public static unsafe partial class Meshopt
         fixed (uint* indicesPtr = indices)
         fixed (float* vertexPositionsPtr = vertexPositions)
             return ComputeClusterBounds(indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride
                 );
     }
 
@@ -683,7 +683,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexPositionsPtr = vertexPositions)
             return ComputeMeshletBounds(meshletVerticesPtr,
                 meshletTrianglesPtr, (nuint)meshletTriangles.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride
                 );
     }
 
@@ -694,7 +694,7 @@ public static unsafe partial class Meshopt
         fixed (uint* destinationPtr = destination)
         fixed (float* vertexPositionsPtr = vertexPositions)
             SpatialSortRemap(destinationPtr,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride
                 );
     }
 
@@ -708,7 +708,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexPositionsPtr = vertexPositions)
             SpatialSortTriangles(destinationPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride
                 );
     }
 
@@ -716,7 +716,7 @@ public static unsafe partial class Meshopt
     {
         fixed (uint* destinationPtr = destination)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            GeneratePositionRemap(destinationPtr, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride);
+            GeneratePositionRemap(destinationPtr, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride);
     }
 
     public static int DecodeIndexVersion(ReadOnlySpan<byte> buffer)
@@ -769,7 +769,7 @@ public static unsafe partial class Meshopt
         {
             return SimplifyWithUpdate(
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 vertexAttributesPtr, vertexAttributesStride,
                 attributeWeightsPtr,
                 attributeCount,
@@ -791,7 +791,7 @@ public static unsafe partial class Meshopt
         fixed (uint* destinationPtr = destination)
         fixed (uint* indicesPtr = indices)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            return SimplifyPrune(destinationPtr, indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride, targetError);
+            return SimplifyPrune(destinationPtr, indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride, targetError);
     }
 
     public static CoverageStatistics AnalyzeCoverage(
@@ -800,7 +800,7 @@ public static unsafe partial class Meshopt
     {
         fixed (uint* indicesPtr = indices)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            return AnalyzeCoverage(indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride);
+            return AnalyzeCoverage(indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride);
     }
 
     public static nuint BuildMeshletsFlex(
@@ -819,7 +819,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexPositionsPtr = vertexPositions)
             return BuildMeshletsFlex(meshletsPtr, meshletVerticesPtr, meshletTrianglesPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 maxVertices, minTriangles, maxTriangles, coneWeight, splitFactor);
     }
 
@@ -839,7 +839,7 @@ public static unsafe partial class Meshopt
         fixed (float* vertexPositionsPtr = vertexPositions)
             return BuildMeshletsSpatial(meshletsPtr, meshletVerticesPtr, meshletTrianglesPtr,
                 indicesPtr, (nuint)indices.Length,
-                vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride,
+                vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride,
                 maxVertices, minTriangles, maxTriangles, fillWeight);
     }
 
@@ -849,14 +849,14 @@ public static unsafe partial class Meshopt
     {
         fixed (float* positionsPtr = positions)
         fixed (float* radiiPtr = radii)
-            return ComputeSphereBounds(positionsPtr, (nuint)positions.Length, positionsStride, radiiPtr, radiiStride);
+            return ComputeSphereBounds(positionsPtr, (nuint)(positions.Length * sizeof(float)) / positionsStride, positionsStride, radiiPtr, radiiStride);
     }
 
     public static Bounds ComputeSphereBounds(
         ReadOnlySpan<float> positions, nuint positionsStride)
     {
         fixed (float* positionsPtr = positions)
-            return ComputeSphereBounds(positionsPtr, (nuint)positions.Length, positionsStride, null, 0);
+            return ComputeSphereBounds(positionsPtr, (nuint)(positions.Length * sizeof(float)) / positionsStride, positionsStride, null, 0);
     }
 
     public static nuint PartitionClusters(
@@ -870,7 +870,7 @@ public static unsafe partial class Meshopt
         fixed (uint* clusterIndicesPtr = clusterIndices)
         fixed (uint* clusterIndexCountsPtr = clusterIndexCounts)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            return PartitionClusters(destinationPtr, clusterIndicesPtr, (nuint)clusterIndices.Length, clusterIndexCountsPtr, (nuint)clusterIndexCounts.Length, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride, targetPartitionSize);
+            return PartitionClusters(destinationPtr, clusterIndicesPtr, (nuint)clusterIndices.Length, clusterIndexCountsPtr, (nuint)clusterIndexCounts.Length, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride, targetPartitionSize);
     }
 
     public static void SpatialClusterPoints(
@@ -880,7 +880,7 @@ public static unsafe partial class Meshopt
     {
         fixed (uint* destinationPtr = destination)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            SpatialClusterPoints(destinationPtr, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride, clusterSize);
+            SpatialClusterPoints(destinationPtr, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride, clusterSize);
     }
 
     public static nuint GenerateVertexRemapCustom(
@@ -891,7 +891,7 @@ public static unsafe partial class Meshopt
     {
         fixed (uint* destinationPtr = destination)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            return GenerateVertexRemapCustom(destinationPtr, null, indexCount, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride, callback, context);
+            return GenerateVertexRemapCustom(destinationPtr, null, indexCount, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride, callback, context);
     }
 
     public static nuint GenerateVertexRemapCustom(
@@ -903,6 +903,6 @@ public static unsafe partial class Meshopt
         fixed (uint* destinationPtr = destination)
         fixed (uint* indicesPtr = indices)
         fixed (float* vertexPositionsPtr = vertexPositions)
-            return GenerateVertexRemapCustom(destinationPtr, indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)vertexPositions.Length, vertexPositionsStride, callback, context);
+            return GenerateVertexRemapCustom(destinationPtr, indicesPtr, (nuint)indices.Length, vertexPositionsPtr, (nuint)(vertexPositions.Length * sizeof(float)) / vertexPositionsStride, vertexPositionsStride, callback, context);
     }
 }
